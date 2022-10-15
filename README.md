@@ -1,8 +1,8 @@
-# AndroidMaterialLoadingButton
+# AndroidCircularProgressArc
 
-![Example GIF](https://github.com/TomTruyen/AndroidMaterialLoadingButton/blob/main/example.gif)
+![Example GIF](https://github.com/TomTruyen/AndroidCircularProgressArc/blob/main/example.png)
 
-A simple LoadingButton using MaterialComponents.
+Customizable progress arc for android.
 
 ## Import
 
@@ -11,7 +11,7 @@ maven { url 'https://jitpack.io' }
 ```
 
 ```gradle
-implementation 'com.github.TomTruyen:AndroidMaterialLoadingButton:1.0'
+implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0'
 ```
 
 ## Usage
@@ -19,22 +19,18 @@ implementation 'com.github.TomTruyen:AndroidMaterialLoadingButton:1.0'
 ### XML
 
 ```xml
-<com.tomtruyen.android.material.loadingbutton.LoadingButton
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+<com.tomtruyen.circularprogressarc.CircularProgressArc
+        android:id="@+id/arc"
         android:layout_centerInParent="true"
-        app:LoadingButton_text="Text"
-        app:LoadingButton_textColor="@color/white"
-        app:LoadingButton_textSize="10sp"
-        app:LoadingButton_icon="@drawable/ic_android"
-        app:LoadingButton_iconGravity="start"
-        app:LoadingButton_iconSize="24dp"
-        app:LoadingButton_indeterminate="true"
-        app:LoadingButton_indicatorColor="@color/white"
-        app:LoadingButton_indicatorSize="24dp"
-        app:LoadingButton_indicatorThickness="2dp"
-        />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        app:angle_start="180"
+        app:angle_sweep="360"
+        app:max_progress="100"
+        app:animation_duration="1000"
+        app:rounded_corners="true"
+        app:progress_color="@color/teal_200"
+        app:stroke_width="10dp" />
 
 ```
 
@@ -43,47 +39,34 @@ implementation 'com.github.TomTruyen:AndroidMaterialLoadingButton:1.0'
 ### Handle click event
 
 ```kotlin
-button.onClick {
-        // it = the LoadingButton
-        it.startLoading()
+findViewById<CircularProgressArc>(R.id.arc)?.let {
+    it.setProgress(50)
+    // NOTE: This overrides the progress_color
+    it.setGradientColors(
+        intArrayOf(
+                ContextCompat.getColor(this, R.color.teal_200),
+                ContextCompat.getColor(this, R.color.teal_700)
+        )
+    )
 }
-```
-
-#### Show loading indicator
-
-```kotlin
-button.startLoading()
-```
-
-#### Hide loading indicator
-
-```kotlin
-button.stopLoading()
-```
-
-#### Check if loading indicator is shown
-
-```kotlin
-button.isLoading
 ```
 
 ### Styling
 
-Basic styling can be done using the given properties. For further styling it is advised to use a custom `style`
-
-Example (Material3):
+Attributes:
 
 ```xml
-<style name="ButtonStyle" parent="Widget.Material3.Button">
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="backgroundTint">@null</item>
-        <item name="android:background">@color/blue</item>
-        <item name="cornerRadius">@dimen/radius_normal</item>
-        <item name="elevation">0dp</item>
-        <item name="android:height">50dp</item>
-        <item name="android:letterSpacing">0</item>
-    </style>
+<declare-styleable name="CircularProgressArc">
+        <attr name="angle_start" format="float" />
+        <attr name="angle_sweep" format="float" />
+        <attr name="max_progress" format="integer" />
+        <attr name="animation_duration" format="integer" />
+        <attr name="rounded_corners" format="boolean" />
+        <attr name="progress_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+</declare-styleable>
 ```
 
-for Material2 `Widget.MaterialComponents.Button` can be used as `parent`
+The progress and gradient can only be set from within the Kotlin code.
+
+All attributes als have setters to access from with Kotlin
