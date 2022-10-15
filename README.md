@@ -11,7 +11,7 @@ maven { url 'https://jitpack.io' }
 ```
 
 ```gradle
-implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0'
+implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0.0'
 ```
 
 ## Usage
