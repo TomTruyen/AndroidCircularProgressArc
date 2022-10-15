@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircularProgressArc">
+        <attr name="angle_start" format="float" />
+        <attr name="angle_sweep" format="float" />
+        <attr name="max_progress" format="integer" />
+        <attr name="animation_duration" format="integer" />
+        <attr name="rounded_corners" format="boolean" />
+        <attr name="progress_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+    </declare-styleable>
+</resources>
