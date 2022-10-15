@@ -27,6 +27,7 @@ class CircularProgressArc(
     private var mAnimationDuration = 1000 // Animation duration for progress change
     private var mRoundedCorners = true // Set to true if rounded corners should be applied to outline ends
     private var mProgressColor: Int = Color.RED // Outline color
+    private var mBackgroundColor: Int = Color.GRAY
     private var mGradientColors = intArrayOf()
     private var mStrokeWidth = 8f // Outline stroke width
     private val mPaint = Paint(Paint.ANTI_ALIAS_FLAG)// Allocate paint outside onDraw to avoid unnecessary object creation
@@ -47,6 +48,7 @@ class CircularProgressArc(
         mMaxProgress = a?.getInt(R.styleable.CircularProgressArc_max_progress, mMaxProgress) ?: mMaxProgress
         mAnimationDuration = a?.getInt(R.styleable.CircularProgressArc_animation_duration, mAnimationDuration) ?: mAnimationDuration
         mProgressColor = a?.getColor(R.styleable.CircularProgressArc_progress_color, mProgressColor) ?: mProgressColor
+        mBackgroundColor = a?.getColor(R.styleable.CircularProgressArc_background_color, mBackgroundColor) ?: mBackgroundColor
         mStrokeWidth = a?.getDimension(R.styleable.CircularProgressArc_stroke_width, mStrokeWidth) ?: mStrokeWidth
         mRoundedCorners = a?.getBoolean(R.styleable.CircularProgressArc_rounded_corners, mRoundedCorners) ?: mRoundedCorners
 
@@ -72,10 +74,12 @@ class CircularProgressArc(
             measuredHeight - (mStrokeWidth / 2)
         )
 
-        mPaint.style = Paint.Style.STROKE
-        mPaint.strokeWidth = mStrokeWidth
-        mPaint.isAntiAlias = true
-        mPaint.strokeCap = Paint.Cap.BUTT
+        canvas.drawArc(outerOval, mStartAngle, mMaxSweepAngle, false, Paint().apply {
+            color = mBackgroundColor
+            style = Paint.Style.STROKE
+            strokeWidth = mStrokeWidth
+            isAntiAlias = true
+        })
 
         // ProgressColor
         if(mGradientColors.isNotEmpty()) {
@@ -84,6 +88,9 @@ class CircularProgressArc(
             mPaint.color = mProgressColor
         }
 
+        mPaint.style = Paint.Style.STROKE
+        mPaint.strokeWidth = mStrokeWidth
+        mPaint.isAntiAlias = true
         mPaint.strokeCap = if (mRoundedCorners) Paint.Cap.ROUND else Paint.Cap.BUTT
 
         canvas.drawArc(outerOval, mStartAngle, mSweepAngle, false, mPaint)
@@ -140,6 +147,11 @@ class CircularProgressArc(
      */
     fun setProgressColor(color: Int) {
         mProgressColor = color
+        invalidate()
+    }
+
+    fun setArcBackgroundColor(color: Int) {
+        mBackgroundColor = color
         invalidate()
     }
 
