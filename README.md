@@ -11,7 +11,7 @@ maven { url 'https://jitpack.io' }
 ```
 
 ```gradle
-implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0.0'
+implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0.1'
 ```
 
 ## Usage
@@ -30,6 +30,7 @@ implementation 'com.github.TomTruyen:AndroidCircularProgressArc:1.0.0'
         app:animation_duration="1000"
         app:rounded_corners="true"
         app:progress_color="@color/teal_200"
+        app:background_color="@color/white"
         app:stroke_width="10dp" />
 
 ```
@@ -63,6 +64,7 @@ Attributes:
         <attr name="animation_duration" format="integer" />
         <attr name="rounded_corners" format="boolean" />
         <attr name="progress_color" format="color" />
+        <attr name="background_color" format="color" />
         <attr name="stroke_width" format="dimension" />
 </declare-styleable>
 ```
